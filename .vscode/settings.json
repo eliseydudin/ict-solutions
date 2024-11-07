@@ -1,4 +1,7 @@
 {
+  "editor.tabSize": 2,
+  "editor.useTabStops": false,
+
   "[cpp]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "xaver.clang-format"
@@ -7,7 +10,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  
-  "editor.tabSize": 2,
-  "editor.useTabStops": false
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.tabSize": 4
+  }
 }
