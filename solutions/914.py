@@ -1,39 +1,32 @@
 """
 #include <iostream>
-using namespace std;
-int rec(int p, int col, int n)
-{
-    if(col==n)
-        return 1;
-    int t=rec(2,col+1,n)+rec(3,col+1,n);
-    if(p!=1)
-        t+=rec(1,col+1,n);
-    return t;
+int main() {
+    int n, a, b, c;
+    std::cin >> n;
+    //base
+    a = 3;
+    b = 8;
+    c = 22;
+    for (int i = 0; i < n-1; ++i) {
+        c = b * 2 + a * 2;
+        a = b;
+        b = c;
+    }
+    std::cout << a << std::endl;
 }
- int main()
- {
-     int n;
-     cin>>n;
-     cout<<rec(1,1,n)+rec(2,1,n)+rec(3,1,n);
-     return 0;
- }
 """
-
-
-def rec(p: int, col: int, n: int) -> int:
-    if col == n:
-        return 1
-
-    t = rec(2, col + 1, n) + rec(3, col + 1, n)
-    if p != 1:
-        t += rec(1, col + 1, n)
-
-    return t
 
 
 def main():
     n = int(input())
-    print(rec(1, 1, n) + rec(2, 1, n) + rec(3, 1, n))
+    a, b, c = 3, 8, 22
+
+    for _ in range(n - 1):
+        c = b * 2 + a * 2
+        a = b
+        b = c
+
+    print(a)
 
 
 if __name__ == "__main__":
