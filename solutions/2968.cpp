@@ -1,8 +1,7 @@
 #include <iostream>
 #include <vector>
-using namespace std;
 
-vector<int> dp, p;
+std::vector<int> dp, p;
 
 int func(int a, int b) {
   if (a == 0) {
