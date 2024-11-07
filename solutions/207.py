@@ -1,4 +1,6 @@
 """
+this code doesn't work due to the size of ints :(
+
 #include <iostream>
 #include <map>
 using i64 = unsigned long long;
@@ -32,7 +34,22 @@ int main() {
 """
 
 
-def main(): ...
+def solve(m: int, cache: dict[int, int]) -> int:
+    data = cache.get(m)
+    if data is not None:
+        return data
+
+    data = solve(m - 1, cache) + solve(m - 2, cache)
+    cache[m] = data
+
+    return data
+
+
+def main():
+    n = int(input())
+    cache = {1: 2, 2: 3}
+
+    print(solve(n, cache))
 
 
 if __name__ == "__main__":
