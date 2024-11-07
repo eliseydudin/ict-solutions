@@ -1,0 +1,13 @@
+{
+  "[cpp]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  
+  "editor.tabSize": 2,
+  "editor.useTabStops": false
+}
