@@ -1,1 +1,1 @@
-# informatics-solutions
+# informatics-solutions 🎓
