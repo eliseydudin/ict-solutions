@@ -14,5 +14,8 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.tabSize": 4
+  },
+  "[crystal]": {
+    "editor.formatOnSave": true
   }
 }
