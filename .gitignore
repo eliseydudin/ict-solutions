@@ -1,0 +1,9 @@
+# macOS directory config
+.DS_Store
+# Compiler output
+*.o
+*.dll
+*.dylib
+*.so
+# Clang cache
+.cache/
