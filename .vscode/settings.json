@@ -6,6 +6,10 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "xaver.clang-format"
   },
+  "[c]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
