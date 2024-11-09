@@ -21,5 +21,9 @@
   },
   "[crystal]": {
     "editor.formatOnSave": true
+  },
+  "[rust]": {
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true
   }
 }
