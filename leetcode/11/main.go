@@ -4,15 +4,13 @@ import "fmt"
 
 func maxArea(height []int) int {
 	max_area := 0
-	max_height_prev := 0
 
-	for i := 1; i < len(height); i++ {
-		if min(height[max_height_prev], height[i])*(i-max_height_prev) > max_area {
-			max_area = min(height[max_height_prev], height[i]) * (i - max_height_prev)
-		}
-
-		if height[i] > max_height_prev {
-			max_height_prev = height[i]
+	for i := 0; i < len(height); i++ {
+		for j := i + 1; j < len(height); j++ {
+			area := min(height[i], height[j]) * (j - i)
+			if area > max_area {
+				max_area = area
+			}
 		}
 	}
 
