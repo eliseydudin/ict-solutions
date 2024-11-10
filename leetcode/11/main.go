@@ -3,14 +3,19 @@ package main
 import "fmt"
 
 func maxArea(height []int) int {
+	n := len(height)
 	max_area := 0
+	left, right := 0, n-1
 
-	for i := 0; i < len(height); i++ {
-		for j := i + 1; j < len(height); j++ {
-			area := min(height[i], height[j]) * (j - i)
-			if area > max_area {
-				max_area = area
-			}
+	for left < right {
+
+		max_area = max(max_area, min(height[left],
+			height[right])*(right-left))
+
+		if height[left] < height[right] {
+			left++
+		} else {
+			right--
 		}
 	}
 
@@ -20,11 +25,11 @@ func maxArea(height []int) int {
 func main() {
 	var n int
 	fmt.Scan(&n)
-	arr := make([]int, n)
+	height := make([]int, n)
 
-	for i := range arr {
-		fmt.Scan(&arr[i])
+	for i := range height {
+		fmt.Scan(&height[i])
 	}
 
-	fmt.Println(maxArea(arr))
+	fmt.Println(maxArea(height))
 }
