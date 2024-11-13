@@ -18,21 +18,26 @@
 #
 
 
+class defaultdict(dict):
+    def __missing__(self, _key) -> int:
+        return 0
+
+
 def main():
     _n = int(input())
     nums = list(map(int, input().split()))
     nums.sort(reverse=True)
 
-    found = {}
+    found = defaultdict()
     count = 0
 
     for a in nums:
-        if a * 2 in found and a * 4 in found:
+        if found[a * 2] != 0 and found[a * 4] != 0:
             count += 1
-            found.pop(a * 2)
-            found.pop(a * 4)
+            found[a * 2] -= 1
+            found[a * 4] -= 1
         else:
-            found[a] = 1
+            found[a] += 1
 
     print(count)
 
