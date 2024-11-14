@@ -10,3 +10,5 @@
 *.exe
 # Clang cache
 .cache/
+# Rust compiler output
+target/
