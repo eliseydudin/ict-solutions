@@ -39,5 +39,9 @@ fn main() {
     let mut results: Results = HashSet::new();
     solve(&mut results);
 
-    println!("{}", results.len())
+    println!("{}", results.len());
+
+    for arr in results {
+        println!("{:?}", arr)
+    }
 }
