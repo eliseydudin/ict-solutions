@@ -7,3 +7,17 @@
 # В скольких различных точках может оказаться Акробат
 # после выполнения различных программ, которые содержат
 # ровно 15 команд?
+
+positions = set()
+
+
+def p(pos: int, am: int):
+    if am == 0:
+        positions.add(pos)
+        return
+    p(pos + 10, am - 1)
+    p(pos - 5, am - 1)
+
+
+p(1, 15)
+print(len(positions))
