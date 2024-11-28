@@ -8,7 +8,7 @@ func get_in_base(base int) int {
 
 func main() {
 	solution := 0
-	for base := 4; base < N; base++ {
+	for base := 4; base <= N; base++ {
 		solution += get_in_base(base)
 	}
 
