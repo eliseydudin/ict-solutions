@@ -1,5 +1,5 @@
 n = int(input())
-e = []
+e: list[tuple[int, int]] = []
 
 for _ in range(n):
     h1, m1, h2, m2 = map(int, input().split())
