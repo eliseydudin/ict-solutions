@@ -18,8 +18,8 @@
 #
 
 
-class defaultdict(dict):
-    def __missing__(self, _key) -> int:
+class defaultdict(dict):  # type: ignore
+    def __missing__(self, _key) -> int:  # type: ignore
         return 0
 
 
