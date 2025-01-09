@@ -2,7 +2,7 @@ def main():
     yes_pile = set(map(str, range(1, int(input()) + 1)))
 
     for line in iter(input, "HELP"):
-        guesses = yes_pile.intersection(line.split())
+        guesses = yes_pile & set(line.split())
         if len(guesses) > (len(yes_pile) - len(guesses)):
             print("YES")
             yes_pile = guesses
