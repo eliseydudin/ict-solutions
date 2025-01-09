@@ -1,4 +1,4 @@
-def solve(graph: list[list[int]], n: int):
+def solve(graph: list[list[int]], n: int) -> tuple[bool, list[int]]:
     color = [-1] * n
     for i in range(n):
         if color[i] == -1:
@@ -20,7 +20,7 @@ def solve(graph: list[list[int]], n: int):
 def main():
     n, m = map(int, input().split())
 
-    graph = [[] for _ in range(n)]
+    graph: list[list[int]] = [[] for _ in range(n)]
     for _ in range(m):
         u, v = map(int, input().split())
         graph[u - 1].append(v - 1)
