@@ -1,6 +1,6 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        stk = []
+        stk: list[str] = []
         d = {"()", "[]", "{}"}
         for c in s:
             if c in "({[":
