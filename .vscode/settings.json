@@ -17,7 +17,9 @@
   "[python]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "editor.formatOnType": true,
+    "diffEditor.ignoreTrimWhitespace": false,
   },
   "[crystal]": {
     "editor.formatOnSave": true
