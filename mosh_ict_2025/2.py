@@ -16,7 +16,7 @@ def closest_power_of_2(num: int) -> int:
     return num
 
 
-@lru_cache
+@lru_cache(None)
 def is_prime(n: int) -> bool:
     if n <= 1:
         return False
