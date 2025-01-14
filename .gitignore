@@ -12,3 +12,6 @@
 .cache/
 # Rust compiler output
 target/
+# ide
+.vscode/
+.idea/
