@@ -1,19 +1,21 @@
-/* 95 points */
-
 #include <iostream>
 
 int main() {
   int timer, len_lesson, len_break, lessons;
   std::cin >> timer >> len_lesson >> len_break >> lessons;
 
-  timer -= 90;
+  int start_time = 9 * 60;
+  int alarm_time = (7 * 60 + 30) + timer;
 
-  if (timer < 0 ||
-      (timer >= len_lesson * lessons + len_break * (lessons - 1)) ||
-      (timer % (len_lesson + len_break) >= len_lesson - 1))
-    std::cout << -1 << std::endl;
-  else
-    std::cout << (timer / (len_lesson + len_break)) + 1 << std::endl;
+  for (int i = 1; i <= lessons; ++i) {
+    int lesson_start = start_time + (i - 1) * (len_lesson + len_break);
+    int lesson_end = lesson_start + len_lesson;
+    if (alarm_time >= lesson_start && alarm_time < lesson_end) {
+      std::cout << i << '\n';
+      return 0;
+    }
+  }
 
+  std::cout << "-1" << std::endl;
   return 0;
 }
