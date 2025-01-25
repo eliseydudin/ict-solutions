@@ -1,94 +1,154 @@
-/* TODO */
+/*
+TASK 5
+45/100 points
+solution by @PD758
+*/
 
-#include <cstdint>
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <queue>
+#include <utility>
 #include <vector>
 
-typedef int32_t i32;
-typedef int8_t i8;
+void solve_for_king(const char& fc, const short& fd, const char& tc,
+                    const short& td) {
+  std::cout << std::max(std::abs(tc - fc), std::abs(td - fd));
+}
 
-struct pos {
-  i8 x, y;
+void solve_for_queen(const char& fc, const short& fd, const char& tc,
+                     const short& td) {
+  int c_diff = std::abs(fc - tc);
+  int d_diff = std::abs(fd - td);
+  if (!c_diff || !d_diff || c_diff == d_diff) {
+    std::cout << "1";
+  } else {
+    std::cout << "2";
+  }
+}
 
-  pos(std::string p) {
-    this->x = p[0] - 'a';
-    this->y = p[1] - 1 - '0';
+void solve_for_rook(const char& fc, const short& fd, const char& tc,
+                    const short& td) {
+  std::cout << ((fc != tc) + (fd != td));
+}
+
+void solve_for_bishop(const char& fc, const short& fd, const char& tc,
+                      const short& td) {
+  if (tc % 2 + td % 2 != fc % 2 + fd % 2) {
+    std::cout << -1;
+    return;
   }
 
-  pos(i8 x, i8 y) {
-    this->x = x;
-    this->y = y;
+  if (tc - td == fc - fd) {
+    std::cout << 1;
+  } else {
+    std::cout << 2;
+  }
+}
+
+void solve_for_knight(const char& fc, const short& fd, const char& tc,
+                      const short& td) {
+  int c_diff = abs(fc - tc);
+  int d_diff = abs(fd - td);
+  if ((c_diff == 2 && d_diff == 1) || (c_diff == 1 && d_diff == 2)) {
+    std::cout << 1;
+    return;
   }
 
-  bool operator==(pos other) {
-    return this->x == other.x && this->y == other.y;
-  }
-};
-
-const std::vector<pos> directions = {{1, 0}, {-1, 0}, {0, 1},  {0, -1},
-                                     {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-
-bool is_valid(i32 x, i32 y) { return x >= 0 && x < 8 && y >= 0 && y < 8; }
-
-i32 solve_for_king(pos start, pos target) {
-  if (start == target) return 0;
-
-  std::queue<pos> q;
+  std::queue<std::pair<char, short>> q;
   std::vector<std::vector<bool>> visited(8, std::vector<bool>(8, false));
-  std::vector<std::vector<i8>> distance(8, std::vector<i8>(8, 0));
-
-  q.push(start);
-  visited[start.x][start.y] = true;
-
+  q.push({fc, fd});
+  visited[fc - 'a'][fd - 1] = true;
+  int moves = 0;
   while (!q.empty()) {
-    auto current = q.front();
-    q.pop();
-
-    for (const auto& dir : directions) {
-      i8 new_x = current.x + dir.x;
-      i8 new_y = current.y + dir.y;
-
-      if (is_valid(new_x, new_y) && !visited[new_x][new_y]) {
-        visited[new_x][new_y] = true;
-        distance[new_x][new_y] = distance[current.x][current.y] + 1;
-        q.push({new_x, new_y});
-
-        if (new_x == target.x && new_y == target.y) {
-          return distance[new_x][new_y];
+    int s = q.size();
+    for (int i = 0; i < s; i++) {
+      auto [curr_c, curr_d] = q.front();
+      q.pop();
+      if (curr_c == tc && curr_d == td) {
+        std::cout << moves;
+        return;
+      }
+      static const std::pair<int, int> directions[] = {
+          {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
+          {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
+      for (const auto& [dx, dy] : directions) {
+        char new_c = curr_c + dx;
+        short new_d = curr_d + dy;
+        if (new_c >= 'a' && new_c <= 'h' && new_d >= 1 && new_d <= 8 &&
+            !visited[new_c - 'a'][new_d - 1]) {
+          q.push({new_c, new_d});
+          visited[new_c - 'a'][new_d - 1] = true;
         }
       }
     }
+    moves++;
+  }
+}
+void solve_for_pawn(const char& fc, const short& fd, const char& tc,
+                    const short& td) {
+  if (fd == 8) {
+    solve_for_queen(fc, fd, tc, td);
+    return;
   }
 
-  return -1;
+  int r_way = (td >= fd && tc == fc ? td - fd : -1);
+
+  if (fd == 2 && td >= 4) {
+    r_way--;
+  }
+  int q_way = (8 - fd) + 1;
+  if (tc != fc) {
+    q_way += 1;
+  }
+
+  if (r_way < q_way && r_way != -1) {
+    std::cout << r_way;
+  } else {
+    std::cout << q_way;
+  }
 }
 
-i32 solve_for_pawn(pos start, pos end) {
-  if (start.x != end.x || start.y < end.y) {
-    return -1;
+void solve() {
+  std::string type, pos_n, pos_r;
+  std::cin >> type >> pos_n >> pos_r;
+
+  char pos_nc = pos_n[0], pos_rc = pos_r[0];
+  short posNd = pos_n[1] - '0', posRd = pos_r[1] - '0';
+
+  if (pos_nc == pos_rc && posNd == posRd) {
+    std::cout << 0 << '\n';
+    return;
   }
 
-  return end.y - start.y;
+  if (type == "KING") {
+    solve_for_king(pos_nc, posNd, pos_rc, posRd);
+  } else if (type == "QUEEN") {
+    solve_for_queen(pos_nc, posNd, pos_rc, posRd);
+  } else if (type == "ROOK") {
+    solve_for_rook(pos_nc, posNd, pos_rc, posRd);
+  } else if (type == "BISHOP") {
+    solve_for_bishop(pos_nc, posNd, pos_rc, posRd);
+  } else if (type == "KNIGHT") {
+    solve_for_knight(pos_nc, posNd, pos_rc, posRd);
+  } else if (type == "PAWN") {
+    solve_for_pawn(pos_nc, posNd, pos_rc, posRd);
+  }
+
+  std::cout << '\n';
 }
 
-i32 main() {
-  i32 queries;
-  std::cin >> queries;
+int main() {
+  std::ios_base::sync_with_stdio(false);
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
 
-  for (i32 i = 0; i < queries; i++) {
-    std::string figure, start_pos, end_pos;
-    std::cin >> figure >> start_pos >> end_pos;
-
-    if (figure == "KING") {
-      std::cout << solve_for_king(start_pos, end_pos) << '\n';
-    } else if (figure == "PAWN") {
-      std::cout << solve_for_pawn(start_pos, end_pos) << '\n';
-    } else {
-      std::cout << "???\n";
-      exit(1);
-    }
+  int t;
+  std::cin >> t;
+  for (int _case = 0; _case < t; _case++) {
+    solve();
   }
 
+  std::cout.flush();
   return 0;
 }
