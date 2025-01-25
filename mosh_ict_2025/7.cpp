@@ -93,7 +93,7 @@ struct ModaVault {
     return *this;
   }
 
-  void addNew(const int& v) {
+  void add(const int& v) {
     counts[v]++;
     if (counts[v] > max_vv) {
       max_vv = counts[v];
