@@ -1,14 +1,18 @@
-#include <cstring>
+/*
+ * NO WORKY
+ */
+
 #include <iostream>
 #include <queue>
 #include <vector>
 
 const int BIG_NUMBER = 2005;
-std::vector<int> adjacency[BIG_NUMBER][BIG_NUMBER];
-bool visited[BIG_NUMBER];
-int vertices[BIG_NUMBER];
-std::vector<int> components[BIG_NUMBER * BIG_NUMBER + BIG_NUMBER];
-bool queue_visited[BIG_NUMBER * BIG_NUMBER + BIG_NUMBER];
+std::vector<std::vector<std::vector<int>>> adjacency(
+    BIG_NUMBER, std::vector<std::vector<int>>(BIG_NUMBER, std::vector<int>()));
+std::vector<bool> visited(BIG_NUMBER);
+std::vector<int> vertices(BIG_NUMBER);
+std::vector<std::vector<int>> components(BIG_NUMBER* BIG_NUMBER + BIG_NUMBER);
+std::vector<bool> queue_visited(BIG_NUMBER* BIG_NUMBER + BIG_NUMBER);
 int comp, cnt;
 int n, k;
 
@@ -53,7 +57,8 @@ int main() {
 
   comp = n;
   for (int i = 1; i <= k; ++i) {
-    std::memset(visited, false, sizeof(visited));
+    std::fill(visited.begin(), visited.end(),
+              false);  // Reset visited for each component
     for (int j = 1; j <= n; ++j) {
       if (!visited[j]) {
         cnt = 0;

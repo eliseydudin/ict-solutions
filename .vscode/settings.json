@@ -28,5 +28,5 @@
     "editor.tabSize": 4,
     "editor.formatOnSave": true
   },
-  "python.analysis.typeCheckingMode": "off"
+  "python.analysis.typeCheckingMode": "strict"
 }
