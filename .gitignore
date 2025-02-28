@@ -5,6 +5,8 @@
 *.dll
 *.dylib
 *.so
+builddir/
+build/
 # Executables
 *.out
 *.exe

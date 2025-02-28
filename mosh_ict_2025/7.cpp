@@ -106,7 +106,7 @@ struct ModaVault {
   void find_max() {
     max_vv = 0;
     cpmveq = true;
-    for (const std::pair<int, int>& p : counts) {
+    for (const std::pair<int, int> p : counts) {
       if (p.second > max_vv) {
         max_v = p.first;
         max_vv = p.second;
@@ -127,7 +127,7 @@ struct ModaVault {
     }
     _mp cp(other.counts);
     counts.merge(cp);
-    for (const std::pair<int, int>& p : cp) counts[p.first] += p.second;
+    for (const std::pair<int, int> p : cp) counts[p.first] += p.second;
     find_max();
   }
 

@@ -4,7 +4,7 @@
 const int MAX = 1000000000;
 
 int main() {
-  int n, m, i, f, j, k, s, t;
+  int n, i, f, j, s;
 
   std::set<std::pair<int, int>> c;
   std::cin >> n >> s >> f;

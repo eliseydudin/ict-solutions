@@ -1,7 +1,7 @@
 #include <iostream>
 
 int main() {
-  int n, k, i, count = 0;
+  int n, k, count = 0;
   std::cin >> n >> k;
 
   int autos[n];
