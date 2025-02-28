@@ -6,11 +6,14 @@ def solve(s: str):
 
     odd = None
     for k, v in counter.items():
-        if v % 2 == 1 and odd is None:
+        if v % 2 != 1:
+            continue
+
+        if odd is None:
             odd = (k, v)
-        elif v % 2 == 1 and odd is not None and ord(odd[0]) > ord(k):
+        elif ord(odd[0]) > ord(k):
             odd = (k, v)
-        elif v % 2 == 1:
+        else:
             counter[k] -= 1
 
     if odd is not None:
