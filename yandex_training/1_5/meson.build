@@ -1,5 +1,5 @@
 sources = ['A.c', 'B.cpp']
 
 foreach source : sources
-  executable(fs.name(source), source)
+  executable(fs.replace_suffix(fs.name(source), ''), source)
 endforeach

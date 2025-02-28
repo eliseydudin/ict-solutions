@@ -23,7 +23,7 @@ int main() {
       k--;
     }
     if (j < 0) std::cout << k + 1 << ' ';
-    i += d[s[i]];
+    i += d[(int)s[i]];
   } while (i < n);
 
   std::cout << std::endl;

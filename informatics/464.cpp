@@ -4,7 +4,6 @@
 int main() {
   int n;
   std::cin >> n;
-  int x = 0;
   std::vector<int> b;
   std::vector<std::vector<int> > g(n, std::vector<int>(n, 0));
 
