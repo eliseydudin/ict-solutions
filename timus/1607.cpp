@@ -4,8 +4,7 @@ int main() {
   int a, b, c, d;
   std::cin >> a >> b >> c >> d;
 
-  int i = 0;
-  while (true) {
+  for (int i = 0;;) {
     if (a + (i * b) >= c - (d * i)) {
       std::cout << (a + (i * b)) << std::endl;
       break;
@@ -15,7 +14,6 @@ int main() {
       std::cout << (c - (d * i)) << std::endl;
       break;
     }
-    i++;
   }
 
   return 0;
