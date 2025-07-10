@@ -4,12 +4,14 @@ def main():
     k = int(input())
     m = int(input())
 
-    nums = (n + 1) * [0]
-    nums[0] = 1
-    nums[1] = k - 1
-    for i in range(2, n + 1):
-        nums[i] = ((k - 1) * (nums[i - 1] + nums[i - 2])) % m
-    print(nums[n])
+    num1 = 1
+    num2 = k - 1
+    for _ in range(2, n + 1):
+        new_num = ((k - 1) * (num2 + num1)) % m
+        num1 = num2
+        num2 = new_num
+
+    print(num2)
 
 
 if __name__ == "__main__":
