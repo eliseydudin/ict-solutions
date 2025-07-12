@@ -7,7 +7,7 @@ most of the solutions are written in c++, they can be compiled using meson:
 ```shell
 meson setup builddir
 meson compile -C builddir
-exec builddir/<website>/<task> # for example `exec builddir/informatic/111403`
+exec builddir/<website>/<task> # for example `exec builddir/informatics/111403`
 ```
 all other solutions can be ran using their respective programs (like go & python)
 
