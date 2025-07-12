@@ -12,4 +12,4 @@ exec builddir/<website>/<task> # for example `exec builddir/informatic/111403`
 all other solutions can be ran using their respective programs (like go & python)
 
 # contributing
-any contributions are welcome! provide any solutions for any website with programming tasks like this, the only requirement is that they pass _some_ tests
+any contributions are welcome! provide any solutions for any website with programming tasks, the only requirement is that they pass _some_ tests
