@@ -11,7 +11,7 @@ int main() {
   std::cin >> c;
 
   double l = 0.0, r = std::sqrt(c);
-  while (l + 1e-10 < r) {
+  while (r - l > 1e-10) {
     double mid = (l + r) / 2.0;
 
     if (solve_helper(mid) < c) {
