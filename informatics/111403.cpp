@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <iostream>
 
-double solve_helper(double number) {
+inline double solve_helper(double number) {
   return number * number + std::sqrt(number);
 }
 
@@ -11,7 +11,7 @@ int main() {
   std::cin >> c;
 
   double l = 0.0, r = std::sqrt(c);
-  while (l + std::numeric_limits<double>::epsilon() < r) {
+  while (l + 1e-10 < r) {
     double mid = (l + r) / 2.0;
 
     if (solve_helper(mid) < c) {
