@@ -1,6 +1,7 @@
 sources = [
   '1.cpp',
   '2.cpp',
+  '3.cpp',
   '99.cpp',
   '164.cpp',
   '168.cpp',
