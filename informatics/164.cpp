@@ -1,40 +1,47 @@
 #include <iostream>
+#include <stack>
 #include <vector>
 
-bool *used;
-std::vector<int> *g;
+int dfs(int n, int target, std::vector<std::vector<int>> &matrix) {
+  std::vector<bool> used(n, false);
+  std::stack<int> visited;
+  visited.push(target);
+  used[target] = 1;
 
-int dfs(int V) {
-  used[V] = true;
-  int cnt = 1;
-  for (auto i : g[V]) {
-    if (!used[i]) {
-      cnt += dfs(i);
-    }
-  }
+  while (!visited.empty()) {
+    int num = visited.top();
+    visited.pop();
 
-  return cnt;
-}
-int main() {
-  int n, k, v;
-  std::cin >> n >> v;
-  v--;
-  used = new bool[n];
+    for (int i = 0; i < n; i++) {
+      if (used[i]) continue;
+      auto &el = matrix[num][i];
 
-  for (int i = 0; i < n; i++) used[i] = false;
-
-  g = new std::vector<int>[n];
-
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-      std::cin >> k;
-      if (k == 1) {
-        g[i].push_back(j);
+      if (el) {
+        visited.push(el);
+        used[i] = true;
       }
     }
   }
 
-  std::cout << dfs(v) << std::endl;
+  int count = 0;
+  for (auto el : used) {
+    if (el) count++;
+  }
 
+  return count;
+}
+
+int main() {
+  int n, target;
+  std::cin >> n >> target;
+
+  std::vector<std::vector<int>> matrix(n, std::vector<int>(n));
+  for (auto &el : matrix) {
+    for (auto &el2 : el) {
+      std::cin >> el2;
+    }
+  }
+
+  std::cout << dfs(n, --target, matrix) << std::endl;
   return 0;
 }
