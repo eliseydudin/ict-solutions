@@ -1,27 +1,19 @@
 #include <iostream>
-#include <stack>
 #include <vector>
 
-int dfs(int n, int target, std::vector<std::vector<int>> &matrix) {
-  std::vector<bool> used(n, false);
-  std::stack<int> visited;
-  visited.push(target);
-  used[target] = 1;
-
-  while (!visited.empty()) {
-    int num = visited.top();
-    visited.pop();
-
-    for (int i = 0; i < n; i++) {
-      if (used[i]) continue;
-      auto &el = matrix[num][i];
-
-      if (el) {
-        visited.push(el);
-        used[i] = true;
-      }
+void dfs(int num, std::vector<std::vector<int>> &matrix,
+         std::vector<bool> &used) {
+  for (int i = 0; i < matrix.size(); i++) {
+    if (matrix[num][i] && !used[i]) {
+      used[i] = true;
+      dfs(i, matrix, used);
     }
   }
+}
+
+int dfs_helper(int target, std::vector<std::vector<int>> &matrix) {
+  std::vector<bool> used(matrix.size(), false);
+  dfs(target, matrix, used);
 
   int count = 0;
   for (auto el : used) {
@@ -42,6 +34,6 @@ int main() {
     }
   }
 
-  std::cout << dfs(n, --target, matrix) << std::endl;
+  std::cout << dfs_helper(--target, matrix) << std::endl;
   return 0;
 }
