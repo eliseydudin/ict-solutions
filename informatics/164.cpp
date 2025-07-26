@@ -13,6 +13,7 @@ void dfs(int num, std::vector<std::vector<int>> &matrix,
 
 int dfs_helper(int target, std::vector<std::vector<int>> &matrix) {
   std::vector<bool> used(matrix.size(), false);
+  used[target] = true;
   dfs(target, matrix, used);
 
   int count = 0;
