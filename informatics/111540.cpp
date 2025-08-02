@@ -1,5 +1,3 @@
-// 75/100
-
 #include <iostream>
 #include <vector>
 
