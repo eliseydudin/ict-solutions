@@ -29,4 +29,5 @@
     "editor.formatOnSave": true
   },
   "python.analysis.typeCheckingMode": "strict",
+  "postman.settings.dotenv-detection-notification-visibility": false,
 }
