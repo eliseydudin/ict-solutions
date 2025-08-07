@@ -1,5 +1,3 @@
-// 41/42
-
 #include <iostream>
 #include <set>
 #include <vector>
@@ -24,16 +22,15 @@ bool dfs(int target, int parent, matrix_t &mat, std::vector<bool> &used) {
 }
 
 bool is_tree(matrix_t &mat, std::vector<bool> &used) {
-  for (int i = 0; i < mat.size(); i++) {
-    if (used[i]) {
-      continue;
-    } else if (mat[i].size() == 0) {
-      return false;
-    }
+  used[0] = true;
+  auto res = dfs(0, -1, mat, used);
 
-    used[i] = true;
-    auto res = dfs(i, -1, mat, used);
-    if (!res) return false;
+  if (!res) {
+    return false;
+  }
+
+  for (auto a : used) {
+    if (!a) return false;
   }
 
   return true;
@@ -59,6 +56,7 @@ int main() {
   } else {
     std::cout << "NO";
   }
+
   std::cout << std::endl;
 
   return 0;
