@@ -1,4 +1,5 @@
 // DOESN'T WORK
+// should check 4 points
 
 #include <cstdint>
 #include <iostream>
