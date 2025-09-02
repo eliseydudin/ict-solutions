@@ -12,6 +12,7 @@ DIRECTORY_SHORT = {
     "mosh25": "mosh_ict_2025",
     "muni2": "municip2",
     "timus": "timus",
+    "tbank": "tbank_otbor_2025",
 }
 
 
