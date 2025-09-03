@@ -1,4 +1,4 @@
-sources = ['1A.cpp', '1B.cpp', '1C.cpp', '1D.cpp']
+sources = ['1A.cpp', '1B.cpp', '1C.cpp', '1D.cpp', '1E.cpp']
 
 foreach source : sources
   executable(fs.replace_suffix(fs.name(source), ''), source)
