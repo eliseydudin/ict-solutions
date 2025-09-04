@@ -3,9 +3,9 @@
 #include <vector>
 
 int main() {
-  long long n;
+  int64_t n;
   std::cin >> n;
-  std::vector<long long> dist(n), count(n);
+  std::vector<int64_t> dist(n), count(n);
 
   for (auto &el : dist) {
     std::cin >> el;
@@ -15,12 +15,12 @@ int main() {
     std::cin >> el;
   }
 
-  long long min_count = LONG_LONG_MAX, sol = -1;
+  int64_t min_count = INT64_MAX, sol = -1;
 
-  for (long long i = 0; i < n; i++) {
-    long long current = 0;
+  for (int64_t i = 0; i < n; i++) {
+    int64_t current = 0;
 
-    for (long long j = 0; j < n; j++) {
+    for (int64_t j = 0; j < n; j++) {
       if (j == i) continue;
       current += std::abs(dist[j] - dist[i]) * count[j];
     }
