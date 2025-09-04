@@ -1,4 +1,4 @@
-#include <climits>
+#include <climits>  // IWYU pragma: keep
 #include <iostream>
 #include <vector>
 
