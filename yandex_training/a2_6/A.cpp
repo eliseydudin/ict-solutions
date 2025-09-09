@@ -31,8 +31,28 @@ inline bool inverted(bool orig, bool invert) {
 
 uint32_t actual_bin_search(uint32_t left, uint32_t right, uint32_t other,
                            bool is_x) {
-  while (left <= right) {
+  pos_t last;
+  if (is_x) {
+    last = {(left + right) / 2, other};
+  } else {
+    last = {other, (left + right) / 2};
   }
+
+  while (left <= right) {
+    pos_t mid;
+    if (is_x) {
+      mid = {(left + right) / 2, other};
+    } else {
+      mid = {other, (left + right) / 2};
+    }
+
+    bool res = ask(mid);
+    auto pdiff = diff(last, mid);
+
+    // if (pdiff.first > )
+  }
+
+  return left;
 }
 
 pos_t bin_search() {
