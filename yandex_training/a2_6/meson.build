@@ -1,5 +1,5 @@
 sources = [
-  #'A.cpp',
+  'A.cpp',
   'D.cpp',
 ]
 
