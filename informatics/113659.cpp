@@ -26,7 +26,7 @@ int main() {
   }
 
   std::cin >> k;
-  std::cout << solve(input, 0) << std::endl;
+  std::cout << solve(input, k) << std::endl;
 
   return 0;
 }
