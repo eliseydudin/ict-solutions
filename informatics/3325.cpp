@@ -6,11 +6,8 @@
 class segment_tree_node {
   typedef std::vector<int>::iterator iterator;
 
-  iterator begin;
-  iterator end;
-
-  segment_tree_node *left_child;
-  segment_tree_node *right_child;
+  iterator begin, end;
+  segment_tree_node *left_child, *right_child;
 
   void build_children() {
     int diff = this->end - this->begin;
@@ -30,8 +27,8 @@ class segment_tree_node {
  public:
   segment_tree_node(iterator begin, iterator end) {
     this->begin = begin;
-    this->end = end;
-
+    this->end = end;	
+    
     this->build_children();
   }
 
@@ -44,19 +41,22 @@ class segment_tree_node {
     delete this->left_child;
     delete this->right_child;
   }
-
+  
   int count_zeroes(iterator z_begin, iterator z_end) {
-    if (this->left_child == nullptr) {
-      if (this->begin >= z_begin && this->end <= z_end) {
-        return (*this->begin) == 0;
-      } else {
-        return 0;
-      }
+  	int count = 0;
+   
+   	if (this->left_child != nullptr) {
+  		count += this->left_child->count_zeroes(z_begin, z_end);
+  		count += this->right_child->count_zeroes(z_begin, z_end);
     } else {
-      return left_child->count_zeroes(z_begin, z_end) +
-             right_child->count_zeroes(z_begin, z_end);
+    	if (this->begin <= z_begin && this->end >= z_end) {
+     		count = (*this->begin == 0);
+     	}
     }
+    
+    return count;
   }
+
 
   // void print() {
   //   for (auto start = begin; start < end; start++) {
@@ -76,40 +76,40 @@ class segment_tree {
   segment_tree_node root;
 
  public:
-  segment_tree(std::vector<int> arr)
+  segment_tree(std::vector<int> &arr)
       : array(arr), root(array.begin(), array.end()) {}
 
   // void print() { this->root.print(); }
 
   void update(size_t index, int value) { this->array[index] = value; }
+  
   int count_zeroes(int start, int end) {
     auto z_begin = this->array.begin() + start;
-    auto z_end = this->array.end() + end;
+    auto z_end = this->array.begin() + end;
 
     return root.count_zeroes(z_begin, z_end);
   }
 };
 
 int main() {
-  int n, q;
-  std::cin >> n;
-  std::vector<int> nums(n);
-  for (auto &el : nums) std::cin >> el;
-  segment_tree tree(nums);
-  std::cin >> q;
-
-  for (int i = 0; i < q; i++) {
-    char query;
-    int left, right;
-    std::cin >> query >> left >> right;
-
-    if (query == 'u') {
-      tree.update(--left, right);
-    } else {
-      std::cout << tree.count_zeroes(--left, --right) << ' ';
-    }
-  }
-  std::cout << std::endl;
-
-  return 0;
+	int n, q, left, right;
+	std::string input;
+	std::cin >> n;
+	
+	std::vector<int> nums(n);
+	for (auto &el : nums) std::cin >> el;
+	segment_tree tree(nums);
+	
+	std::cin >> q;
+	for (int i = 0; i < q; i++) {
+		std::cin >> input >> left >> right;
+		
+		if (input[0] == 'u') {
+			tree.update(--left, right);
+		} else {
+			std::cout << tree.count_zeroes(--left, --right) << ' ';
+		}
+	}
+	
+	std::cout << std::endl;
 }
