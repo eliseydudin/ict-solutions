@@ -1,11 +1,10 @@
-#include <cstring>
 #include <iostream>
+#include <vector>
 
 int main() {
   int n, m;
   std::cin >> n >> m;
-  int matrix[n][n];
-  bzero(matrix, sizeof(matrix));
+  std::vector<std::vector<int>> matrix(n, std::vector<int>(n, 0));
 
   for (int i = 0; i < m; i++) {
     int i1, i2;
@@ -15,22 +14,16 @@ int main() {
     matrix[i2 - 1][i1 - 1] = 1;
   }
 
-  bool found_zero = false;
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
       if (i != j && !matrix[i][j]) {
-        found_zero = true;
-        goto end;
+        std::cout << "NO" << std::endl;
+        return 0;
       }
     }
   }
 
-end:
-  if (found_zero) {
-    std::cout << "NO" << std::endl;
-  } else {
-    std::cout << "YES" << std::endl;
-  }
+  std::cout << "YES" << std::endl;
 
   return 0;
 }
