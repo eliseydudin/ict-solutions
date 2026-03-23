@@ -1,12 +1,12 @@
 #include <cstring>
 #include <iostream>
+#include <vector>
 
 int main() {
   int n, m;
   std::cin >> n >> m;
 
-  int arr[n][n];
-  bzero(arr, sizeof(arr));
+  std::vector<std::vector<int>> arr(n, std::vector<int>(n, 0));
 
   for (int i = 0; i < m; i++) {
     int a, b;
@@ -27,12 +27,7 @@ int main() {
     }
   }
 
-  if (result) {
-    std::cout << "YES";
-  } else {
-    std::cout << "NO";
-  }
-  std::cout << std::endl;
+  std::cout << (result ? "YES" : "NO") << std::endl;
 
   return 0;
 }
