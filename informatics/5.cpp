@@ -1,48 +1,53 @@
-// NO WORKY
-
 #include <climits>
 #include <iostream>
 #include <set>
+#include <vector>
+
+void solve(int n, std::vector<int>& dist, std::vector<std::vector<int>>& matrix,
+           int start, int finish) {
+  std::set<int> visited;
+  int target = start;
+  dist[target] = 0;
+
+  while (true) {
+    for (int i = 0; i < n; i++) {
+      auto distance_to = matrix[target][i];
+      if (distance_to == 0 || distance_to == -1 || visited.count(i) == 1)
+        continue;
+
+      int new_dist = dist[target] + distance_to;
+      if (new_dist < dist[i] || dist[i] == -1) dist[i] = new_dist;
+    }
+
+    visited.insert(target);
+    target = INT_MAX;
+    for (int i = 0; i < n; i++) {
+      auto d = dist[i];
+      if (visited.count(i) == 1 || d == -1) continue;
+      if (target == INT_MAX || dist[target] > d) target = i;
+    }
+
+    if (target == INT_MAX) {
+      break;
+    }
+  }
+}
 
 int main() {
-  int n, finish, start;
-  std::set<std::pair<int, int>> adjacent;
+  int n, start, finish;
   std::cin >> n >> start >> finish;
-  start--;
-  finish--;
 
-  int matrix[n][n], distance[n];
-  bool visited[n];
+  std::vector<int> dist(n, -1);
+  std::vector<std::vector<int>> matrix(n, std::vector<int>(n));
 
-  for (int i = 0; i < n; ++i) {
-    distance[i] = INT_MAX;
-    visited[i] = true;
-    for (int j = 0; j < n; ++j) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
       std::cin >> matrix[i][j];
-      if (matrix[i][j] < 0) matrix[i][j] = INT_MAX;
     }
   }
 
-  distance[start] = 0;
-  adjacent.insert(std::make_pair(0, start));
+  solve(n, dist, matrix, --start, --finish);
+  std::cout << dist[finish] << std::endl;
 
-  while (!adjacent.empty()) {
-    int i = adjacent.begin()->second;
-    visited[i] = false;
-    adjacent.erase(adjacent.begin());
-
-    for (int j = 0; j < n; ++j)
-      if (visited[j] && distance[j] > distance[i] + matrix[i][j]) {
-        adjacent.erase(std::make_pair(distance[j], j));
-        distance[j] = distance[i] + matrix[i][j];
-        adjacent.insert(std::make_pair(distance[j], j));
-      }
-  }
-
-  if (distance[finish] < INT_MAX) {
-    std::cout << distance[finish] << std::endl;
-  } else {
-    std::cout << -1 << std::endl;
-  }
   return 0;
 }
