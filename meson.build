@@ -1,11 +1,11 @@
 project(
-  'informatics',
-  ['cpp', 'c'],
-  default_options: [
-    'cpp_std=c++23',
-    'b_ndebug=if-release',
-    'buildtype=debugoptimized',
-  ],
+	'informatics',
+	['cpp', 'c'],
+	default_options: [
+		'cpp_std=c++23',
+		'b_ndebug=if-release',
+		'buildtype=debugoptimized',
+	],
 )
 
 # disables errors on vla: creating an array of a variable size
@@ -17,7 +17,9 @@ subdir('acmp')
 subdir('codeforces')
 subdir('informatics')
 subdir('leetcode')
-subdir('mosh_ict_2025')
 subdir('yandex_training')
 subdir('timus')
-subdir('tbank_otbor_2025')
+
+if get_option('archive')
+	subdir('archive')
+endif

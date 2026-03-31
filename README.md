@@ -13,6 +13,3 @@ to run a solution use the `run.py` utility from the root of the repo, example:
 ./run.py inf 160
 ```
 this will automatically compile all files & execute the program at `./informatics/160.cpp`.
-
-# contributing
-any contributions are welcome! provide any solutions for any website with programming tasks, the only requirement is that they pass _some_ tests
