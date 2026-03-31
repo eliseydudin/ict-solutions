@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import os
 import argparse
+import subprocess
+from os import listdir, path
 
 # short forms of the possible directories
 DIRECTORY_SHORT = {
@@ -16,12 +17,16 @@ DIRECTORY_SHORT = {
 }
 
 
+def run_cmd(*cmd: str, shell=True) -> int:
+    return subprocess.call(cmd, shell=shell)
+
+
 # get the possible runners for a task
 def get_possible_runners(filenames: list[str]) -> set[str]:
     runners: set[str] = set()
 
     for filename in filenames:
-        _base, ext = os.path.splitext(filename)
+        _base, ext = path.splitext(filename)
 
         match ext:
             case "":
@@ -36,17 +41,19 @@ def get_possible_runners(filenames: list[str]) -> set[str]:
     return runners
 
 
-def actually_run(dir: str, task: str, runner: str) -> int:
+def run(dir: str, task: str, runner: str) -> int:
     match runner:
         case "go":
-            return os.system(f"go run ./{dir}/{task}/main.go")
+            return run_cmd("go", "run", f"./{dir}/{task}/main.go")
         case "python":
-            return os.system(f"python3 ./{dir}/{task}.py")
+            return run_cmd("python3", f"./{dir}/{task}.py")
         case "c++":
-            if not os.path.exists("builddir"):
-                os.system("meson setup builddir")
-            os.system("meson compile -C builddir")  # compile everything
-            return os.system(f"./builddir/{dir}/{task}")
+            if not path.exists("builddir"):
+                run_cmd("meson", "setup", "builddir", shell=False)
+            run_cmd(
+                "meson", "compile", "-C", "builddir", shell=False
+            )  # compile everything
+            return run_cmd(f"./builddir/{dir}/{task}")
         case _:
             pass
 
@@ -64,8 +71,8 @@ def main(
 
     actual_dir = DIRECTORY_SHORT[dir]
     possible_tasks = filter(
-        lambda x: os.path.basename(x).split(".")[0] == task,
-        os.listdir(actual_dir),
+        lambda x: path.basename(x).split(".")[0] == task,
+        listdir(actual_dir),
     )
 
     runners = get_possible_runners(list(possible_tasks))
@@ -84,24 +91,24 @@ def main(
                 print("error: invalid runner")
                 return 1
 
-    return actually_run(actual_dir, task, runner)
+    return run(actual_dir, task, runner)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog="run", description="Run a solution for a task in this repository"
+        prog="run", description="run a solution for a task in this repository"
     )
     parser.add_argument(
         "dir",
         help="The directory that contains the task",
         choices=DIRECTORY_SHORT.keys(),
     )
-    parser.add_argument("task", help="The task to run")
+    parser.add_argument("task", help="the task to run")
     args = parser.parse_args()
 
     result = main(args.dir, args.task)
     print(
-        f"the program ended with the code {hex(result)}, {"success" if result == 0 else "failure"}"
+        f"the program ended with the code {hex(result)}, {'success' if result == 0 else 'failure'}"
     )
 
     exit(result)
