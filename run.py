@@ -44,9 +44,9 @@ def get_possible_runners(filenames: list[str]) -> set[str]:
 def run(dir: str, task: str, runner: str) -> int:
     match runner:
         case "go":
-            return run_cmd("go", "run", f"./{dir}/{task}/main.go")
+            return run_cmd("go", "run", f"./{dir}/{task}/main.go", shell=False)
         case "python":
-            return run_cmd("python3", f"./{dir}/{task}.py")
+            return run_cmd("python3", f"./{dir}/{task}.py", shell=False)
         case "c++":
             if not path.exists("builddir"):
                 run_cmd("meson", "setup", "builddir", shell=False)
