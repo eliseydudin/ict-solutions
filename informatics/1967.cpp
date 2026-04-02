@@ -1,81 +1,94 @@
-#include <climits>
+#include <array>
 #include <iostream>
+#include <queue>
 #include <set>
 #include <vector>
 
-struct road {
-  int time, max_weight;
+typedef std::vector<std::vector<std::array<int, 3>>> graph_t;
 
-  road(int time, int max_weight) : time(time), max_weight(max_weight) {}
-  road() : time(-1), max_weight(-1) {}
-};
+int dijkstra(int n, int m, int cups, graph_t& graph) {
+  std::vector<bool> used(n + 1);
+  std::priority_queue<std::pair<int, int>> queue;
+  queue.push(std::make_pair(0, -1));
 
-struct node_data {
-  int time_to = -1;
-  int cups = 0;
-};
+  while (!queue.empty()) {
+    auto cur = queue.top();
+    queue.pop();
+    int current_time = -cur.first, from = -cur.second;
+    used[from] = true;
 
-int djikstra(int n, std::vector<std::vector<road>>& graph) {
-  std::set<int> visited;
-  std::vector<node_data> dist(n, node_data());
+    if (current_time > 1440) {
+      return 0;
+    }
 
-  int target = 0;
-  dist[target].time_to = 0;
-  dist[target].cups = 10000000;
+    if (from == n) {
+      return current_time;
+    }
 
-  while (true) {
-    auto target_node = dist[target];
-
-    for (int i = 0; i < n; i++) {
-      auto rd = graph[target][i];
-      if (visited.count(i) == 1 || rd.time == -1) continue;
-
-      auto& i_node = dist[i];
-      auto new_cups = std::min(target_node.cups, rd.max_weight);
-
-      if (i_node.time_to == -1 || i_node.cups < new_cups) {
-        i_node.time_to = target_node.time_to + rd.time;
-        i_node.cups = new_cups;
+    for (auto road : graph[from]) {
+      if (road[2] >= cups && !used[road[0]]) {
+        int tmp = current_time + road[1];
+        if (tmp <= 1440) {
+          queue.push(std::make_pair(-tmp, -road[0]));
+        }
       }
-    }
-
-    visited.insert(target);
-    target = INT_MAX;
-
-    for (int i = 0; i < n; i++) {
-      auto d = dist[i];
-      if (visited.count(i) == 1 || d.time_to == -1) continue;
-      if (target == INT_MAX || dist[target].cups > d.cups) target = i;
-    }
-
-    if (target == INT_MAX) {
-      break;
     }
   }
 
-  return dist[n - 1].cups;
+  return 0;
 }
 
 int main() {
-  int n, m, left, right, minutes, max_weight;
+  int n, m, from, to, time, weight;
   std::cin >> n >> m;
 
-  std::vector<std::vector<road>> graph(n, std::vector<road>(n, road()));
+  graph_t graph;
+  graph.resize(n + 1);
 
-  for (int i = 0; i < n; i++) {
-    std::cin >> left >> right >> minutes >> max_weight;
+  if (n == 1) {
+    std::cout << 10000000 << std::endl;
+    return 0;
+  }
 
-    auto cups = (max_weight - 3000000) / 100;
+  std::set<int> unique_cups;
+
+  for (int i = 0; i < m; ++i) {
+    std::cin >> from >> to >> time >> weight;
+    int cups = (weight - 3000000) / 100;
     if (cups <= 0) {
       continue;
     }
 
-    graph[left - 1][right - 1] = road(minutes, cups);
-    graph[right - 1][left - 1] = road(minutes, cups);
+    graph[from].push_back({to, time, cups});
+    graph[to].push_back({from, time, cups});
+    unique_cups.insert(cups);
   }
 
-  auto answer = djikstra(n, graph);
-  std::cout << answer << std::endl;
+  std::vector<int> unique_cups_vec;
+  for (auto cups : unique_cups) {
+    unique_cups_vec.push_back(cups);
+  }
+
+  int l = 0;
+  int r = unique_cups.size() - 1;
+  int max_cups = 0;
+
+  while (l <= r) {
+    int m = (l + r) / 2;
+    int min_time = dijkstra(n, m, unique_cups_vec[m], graph);
+
+    if (min_time == 0) {
+      r = m - 1;
+    } else {
+      l = m + 1;
+
+      if (unique_cups_vec[m] > max_cups) {
+        max_cups = unique_cups_vec[m];
+      }
+    }
+  }
+
+  std::cout << max_cups << std::endl;
 
   return 0;
 }
